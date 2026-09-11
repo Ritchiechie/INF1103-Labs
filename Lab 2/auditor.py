@@ -8,7 +8,8 @@ while True:
 
     elif quantity.isdigit():
         quantity = int(quantity)
-        quantity += inventory
+        inventory += quantity
+        print(inventory)
 
     else: 
         print("Invalid input. Please enter a valid quantity or 'quit' to exit.")
