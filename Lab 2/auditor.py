@@ -1,22 +1,27 @@
 inventory = 0
+failed_entries = 0
 
 while True:
     quantity = input("Enter the quantity of items to add to inventory: ")
+
     if quantity == "quit":
         print("Exiting program....")
-        print(inventory)
+        print("Total units processed: ", inventory)
+        print("Failed/Rejected entries: ", failed_entries)
         break
 
     elif quantity.isdigit():
         quantity = int(quantity)
         inventory += quantity
-        print(inventory)
 
         if inventory >= 500:
             print("Inventory limit reached!!!")
+            print(inventory)    
             break
 
     else: 
+        failed_entries += 1
+
         print("Invalid input. Please enter a valid quantity or 'quit' to exit.")
         
         
