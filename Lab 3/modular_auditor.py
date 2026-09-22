@@ -1,5 +1,6 @@
 inventory = 0
 failed_entries = 0
+deliveries = 0
 
 def get_valid_input():
     get_input = input("Enter the quantity of items to add to inventory: ")
@@ -22,13 +23,16 @@ def calculate_tax(amount):
     tax = amount * 0.1
     return tax
 
+def generate_report(total_units, failed_attempts):
+    print("Generating report...")
+    print("Total units processed: ", total_units)
+    print("Failed/Rejected entries: ", failed_attempts)
+
 while True:
     user_input = get_valid_input()
     
     if user_input == "quit":
-            print("Exiting program....")
-            print("Total units processed: ", inventory)
-            print("Failed/Rejected entries: ", failed_entries)
+            generate_report(deliveries, failed_entries)
             break
 
     elif user_input is None:
@@ -38,6 +42,7 @@ while True:
         inventory = process_delivery(inventory, user_input)
         tax_amount = calculate_tax(user_input)
         print("Tax amount for this delivery: ", tax_amount)
+        deliveries += 1
 
 
    
