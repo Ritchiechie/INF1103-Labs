@@ -21,11 +21,11 @@ def process_delivery(current_total, new_value):
 
 def calculate_tax(amount):
     tax = amount * 0.1
-    return tax
+    return round(tax, 1)
 
 def generate_report(total_units, failed_attempts):
     print("Generating report...")
-    print("Total units processed: ", total_units)
+    print("Total deliveries processed: ", total_units)
     print("Failed/Rejected entries: ", failed_attempts)
 
 while True:
@@ -43,9 +43,3 @@ while True:
         tax_amount = calculate_tax(user_input)
         print("Tax amount for this delivery: ", tax_amount)
         deliveries += 1
-
-
-   
-        
-        
-        
