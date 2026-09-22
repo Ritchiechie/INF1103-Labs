@@ -13,7 +13,6 @@ while True:
     elif quantity.isdigit():
         quantity = int(quantity)
         inventory += quantity
-
         if inventory >= 500:
             print("Inventory limit reached!!!")
             print(inventory)    
@@ -21,7 +20,6 @@ while True:
 
     else: 
         failed_entries += 1
-
         print("Invalid input. Please enter a valid quantity or 'quit' to exit.")
         
         
