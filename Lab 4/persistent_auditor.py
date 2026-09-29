@@ -1,9 +1,8 @@
 import os
 
-
 inventory = 0
 failed_entries = 0
-deliveries = 0
+order_id = 1001
 orders = []
 
 def get_valid_input():
@@ -51,6 +50,7 @@ while True:
     else:
          product = user_input[0]
          quantity = user_input[1]
-         orders.append(user_input)
+         orders.append([order_id, product, quantity])
+         order_id += 1
          save_inventory()
-         print("Order added. Current orders:", orders)
+         print("New Order Added:\n", orders)
