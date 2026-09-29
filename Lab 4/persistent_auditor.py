@@ -34,14 +34,16 @@ def load_inventory():
 def save_inventory():
     with open("inventory.txt", "w") as file:
         file.writelines(str(orders))
+    print("Order successfully saved to inventory.txt.")
 
-print("Current Orders:")
-print(load_inventory())
+print("Current Orders:\n")
+print(load_inventory(),)
 
 while True:
     user_input = get_valid_input()
     
     if user_input == "quit":
+            save_inventory()
             break
 
     elif user_input is None:
@@ -52,5 +54,4 @@ while True:
          quantity = user_input[1]
          orders.append([order_id, product, quantity])
          order_id += 1
-         save_inventory()
          print("New Order Added:\n", orders)
