@@ -1,3 +1,6 @@
+import os
+
+
 inventory = 0
 failed_entries = 0
 deliveries = 0
@@ -22,11 +25,19 @@ def get_valid_input():
         return None
 
 def load_inventory():
-    with open("C:\\School\\Trimester 1\\INF1103-Programming Fundamentals with DevOps\\Labs\\Lab 4\\inventory.txt", "r") as file:
-        data = file.read()
-    print(data)
-    
-load_inventory()
+    if os.path.exists("inventory.txt"):
+        with open("inventory.txt", "r") as file:
+            data = file.read()
+    else:
+        data = ""
+    return data
+
+def save_inventory():
+    with open("inventory.txt", "w") as file:
+        file.writelines(str(orders))
+
+print("Current Orders:")
+print(load_inventory())
 
 while True:
     user_input = get_valid_input()
@@ -41,6 +52,5 @@ while True:
          product = user_input[0]
          quantity = user_input[1]
          orders.append(user_input)
-         with open("C:\\School\\Trimester 1\\INF1103-Programming Fundamentals with DevOps\\Labs\\Lab 4\\inventory.txt", "a") as file:
-            file.writelines(str(orders))
+         save_inventory()
          print("Order added. Current orders:", orders)
