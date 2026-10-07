@@ -1,3 +1,6 @@
+import json
+import os
+
 def display_all(inventory):
     print("Current Inventory")
     print("-" * 50)
@@ -54,6 +57,20 @@ def search_product(inventory):
                 return
         if not search:
             print("Product not found. Please try again.")
+
+
+def load_inventory():
+    if os.path.exists("inventory.json"):
+        with open("inventory.json", "r") as file:
+            inventory = json.load(file)
+        print("inventory/json found.")
+        print("Inventory loaded successfully.")
+
+    else:
+        inventory = []
+        print("inventory.json not found. Starting with an empty inventory.")
+    return inventory
+
 
 inventory = [
     {"id": "P001", "name": "Laptop", "price": 1200.00, "stock": 15},
