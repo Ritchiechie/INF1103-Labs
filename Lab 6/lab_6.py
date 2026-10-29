@@ -1,3 +1,28 @@
+import json
+import os
+
+def load_inventory():
+    inventory = Inventory()
+    if os.path.exists("inventory.json"):
+        with open("inventory.json", "r") as file:
+            data = json.load(file)
+        for item in data:
+            product = Product(item["id"], item["name"], item["price"], item["stock"])
+            inventory.add_product(product)
+        print("inventory.json found.")
+        print("Inventory loaded successfully.")
+    else:
+        print("inventory.json not found. Starting with an empty inventory.")
+    return inventory
+
+def save_inventory(inventory):
+    data = []
+    for product in inventory.get_products():
+        data.append(product.to_dict())
+    with open("inventory.json", "w") as file:
+        json.dump(data, file, indent=4)
+    print("Inventory saved successfully to inventory.json.")
+
 class Product:
     def __init__(self, product_id, name, price, stock):
         self.__product_id = product_id
@@ -17,6 +42,14 @@ class Product:
 
     def get_product_id(self):
         return self.__product_id
+
+    def to_dict(self):
+        return {
+            "id": self.__product_id,
+            "name": self.__name,
+            "price": self.__price,
+            "stock": self.__stock
+        }
 
 class Inventory:
     def __init__(self):
@@ -38,15 +71,9 @@ class Inventory:
             product.display_information()
         print("-" * 50)
 
-inventory = Inventory()
-product1 = Product("P001", "Laptop", 1200.00, 15)
-product2 = Product("P002", "Mouse", 25.50, 40)
-inventory.add_product(product1)
-inventory.add_product(product2)
+    def get_products(self):
+        return self.__products
 
+inventory = load_inventory()
 inventory.display_all()
-
-found = inventory.search_product("P999")
-if found is not None:
-    found.update_stock(50)
-inventory.display_all()
+save_inventory(inventory)
