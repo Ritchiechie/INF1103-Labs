@@ -55,13 +55,26 @@ def main():
 
         elif option == "2":
             print("Add New Product")
+            print("1. Physical Product")
+            print("2. Digital Product")
+            product_type = input("Choose product type: ")
             product_id = input("Product ID: ")
             name = input("Product Name: ")
             price = float(input("Price: "))
             stock = int(input("Stock Quantity: "))
-            product = Product(product_id, name, price, stock)
-            inventory.add_product(product)
-            print("Product added successfully!")
+
+            if product_type == "1":
+                weight = float(input("Weight (kg): "))
+                product = PhysicalProduct(product_id, name, price, stock, weight)
+                inventory.add_product(product)
+                print("Product added successfully!")
+            elif product_type == "2":
+                download_size = float(input("Download Size (MB): "))
+                product = DigitalProduct(product_id, name, price, stock, download_size)
+                inventory.add_product(product)
+                print("Product added successfully!")
+            else:
+                print("Invalid product type.")
 
         elif option == "3":
             print("Update Stock")
