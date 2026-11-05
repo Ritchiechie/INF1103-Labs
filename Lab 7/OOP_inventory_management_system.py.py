@@ -3,6 +3,8 @@ import os
 
 from product import Product
 from inventory import Inventory
+from physical_product import PhysicalProduct
+from digital_product import DigitalProduct
 
 def load_inventory():
     inventory = Inventory()
@@ -10,14 +12,17 @@ def load_inventory():
         with open("inventory.json", "r") as file:
             data = json.load(file)
         for item in data:
-            product = Product(item["id"], item["name"], item["price"], item["stock"])
+            if item["type"] == "physical":
+                product = PhysicalProduct(item["id"], item["name"], item["price"], item["stock"], item["weight"])
+            elif item["type"] == "digital":
+                product = DigitalProduct(item["id"], item["name"], item["price"], item["stock"], item["download_size"])
             inventory.add_product(product)
         print("inventory.json found.")
         print("Inventory loaded successfully.")
     else:
         print("inventory.json not found. Starting with an empty inventory.")
     return inventory
-
+    
 def save_inventory(inventory):
     data = []
     for product in inventory.get_products():
