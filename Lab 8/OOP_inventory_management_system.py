@@ -5,17 +5,25 @@ from product import Product
 from inventory import Inventory
 from physical_product import PhysicalProduct
 from digital_product import DigitalProduct
+from supplier import Supplier
 
-def load_inventory():
+def load_inventory() -> Inventory:
     inventory = Inventory()
     if os.path.exists("inventory.json"):
         with open("inventory.json", "r") as file:
             data = json.load(file)
+        suppliers: dict[str, Supplier] = {}
         for item in data:
+            s = item["supplier"]
+            if s["id"] not in suppliers:
+                suppliers[s["id"]] = Supplier(s["id"], s["name"], s["contact_email"])
+            supplier = suppliers[s["id"]]
             if item["type"] == "physical":
-                product = PhysicalProduct(item["id"], item["name"], item["price"], item["stock"], item["weight"])
+                product = PhysicalProduct(item["id"], item["name"], item["price"],
+                                          item["stock"], supplier, item["weight"])
             elif item["type"] == "digital":
-                product = DigitalProduct(item["id"], item["name"], item["price"], item["stock"], item["download_size"])
+                product = DigitalProduct(item["id"], item["name"], item["price"],
+                                         item["stock"], supplier, item["download_size"])
             inventory.add_product(product)
         print("inventory.json found.")
         print("Inventory loaded successfully.")
@@ -62,15 +70,19 @@ def main():
             name = input("Product Name: ")
             price = float(input("Price: "))
             stock = int(input("Stock Quantity: "))
+            supplier_id = input("Supplier ID: ")
+            supplier_name = input("Supplier Name: ")
+            supplier_email = input("Supplier Email: ")
+            supplier = Supplier(supplier_id, supplier_name, supplier_email)
 
             if product_type == "1":
                 weight = float(input("Weight (kg): "))
-                product = PhysicalProduct(product_id, name, price, stock, weight)
+                product = PhysicalProduct(product_id, name, price, stock, supplier, weight)
                 inventory.add_product(product)
                 print("Product added successfully!")
             elif product_type == "2":
                 download_size = float(input("Download Size (MB): "))
-                product = DigitalProduct(product_id, name, price, stock, download_size)
+                product = DigitalProduct(product_id, name, price, stock, supplier, download_size)
                 inventory.add_product(product)
                 print("Product added successfully!")
             else:
