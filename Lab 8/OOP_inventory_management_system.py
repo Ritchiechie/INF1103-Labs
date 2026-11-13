@@ -31,7 +31,7 @@ def load_inventory() -> Inventory:
         print("inventory.json not found. Starting with an empty inventory.")
     return inventory
     
-def save_inventory(inventory):
+def save_inventory(inventory: Inventory) -> None:
     data = []
     for product in inventory.get_products():
         data.append(product.to_dict())
@@ -39,7 +39,7 @@ def save_inventory(inventory):
         json.dump(data, file, indent=4)
     print("Inventory saved successfully to inventory.json.")
 
-def main():
+def main() -> None:
     print("=" * 40)
     print("INVENTORY MANAGEMENT SYSTEM")
     print("=" * 40)
